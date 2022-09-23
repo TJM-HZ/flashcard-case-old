@@ -19,9 +19,9 @@ const supabase = createClient(
  * @param {*} id the id form a appointment
  * @returns appointment data
  */
-export async function getAppointmentData(id) {
+export async function getCardData(id) {
   console.log('Look for id:', id);
-  const { data, error } = await supabase.from('appointments').select('*').eq('id', id);
+  const { data, error } = await supabase.from('cards').select('*').eq('id', id);
   if (error) console.log('query error', error);
   else return data;
 }
@@ -30,8 +30,8 @@ export async function getAppointmentData(id) {
  * function to read all the appointments
  * @returns an array of appointments
  */
-export async function getAppointmentsData() {
-  const { data, error } = await supabase.from('appointments').select('*');
+export async function getCardsData() {
+  const { data, error } = await supabase.from('cards').select('*');
   if (error) console.log('query error', error);
   else return data;
 }
@@ -51,19 +51,19 @@ async function getTimeslot(timeSlotNumber){
 
 /**
  * Function to write a specific appointment
- * @param {*} appointment 
+ * @param {*} card 
  * @returns 
  */
-export async function setAppointmentData(appointment) {
+export async function setCardData(card) {
   // find the id
-  const timeSlotId = await getTimeslot(appointment.timeslot)
+  const timeSlotId = await getTimeslot(card.timeslot)
   console.log('timeSlotId', timeSlotId[0].id);
-  const { data, error } = await supabase.from('appointments').insert([
+  const { data, error } = await supabase.from('cards').insert([
     {
-      date: appointment.date,
+      date: card.date,
       timeslot: timeSlotId[0].id,
       state: 'unchecked',
-      pet: appointment.pet,
+      pet: card.pet,
     },
   ]);
   if (error) console.log('Error', error);
