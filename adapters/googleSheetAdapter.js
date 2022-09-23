@@ -5,7 +5,7 @@ dotenv.config({ path: 'variables.env' });
 export const getDataPromise = async () => {
   // the unique id of the google sheet
   const doc = new GoogleSpreadsheet(
-    '1At8j3RzGNs34LXe0maPZ2w7MDBKdWT8q3x_VALlKzco' // TODO REPLACE THIS WITH OUR SHEET
+    'grand-airport-363307' // TODO REPLACE THIS WITH OUR SHEET
   );
 
   // connect with Google sheets

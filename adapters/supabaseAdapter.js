@@ -14,10 +14,10 @@ const supabase = createClient(
 );
 
 /**
- * Function to get the data from one appointment
+ * Function to get the data from one card
  * 
- * @param {*} id the id form a appointment
- * @returns appointment data
+ * @param {*} id the id of a card
+ * @returns card data
  */
 export async function getCardData(id) {
   console.log('Look for id:', id);
@@ -36,34 +36,33 @@ export async function getCardsData() {
   else return data;
 }
 
-/**
- * Function to get the timeslot number
- * 
- * @param {*} timeSlotNumber the id of a timeSlot
- * @returns an specific timeslot
- */
-async function getTimeslot(timeSlotNumber){
-  console.log('👀 for id:', timeSlotNumber);
-  const { data, error } = await supabase.from('timeslot').select('id').eq('nr', timeSlotNumber);
-  if (error) console.log('query error', error);
-  else return data;
-}
+// /**
+//  * Function to get the timeslot number
+//  * 
+//  * @param {*} timeSlotNumber the id of a timeSlot
+//  * @returns an specific timeslot
+//  */
+// async function getTimeslot(timeSlotNumber){
+//   console.log('👀 for id:', timeSlotNumber);
+//   const { data, error } = await supabase.from('timeslot').select('id').eq('nr', timeSlotNumber);
+//   if (error) console.log('query error', error);
+//   else return data;
+// }
 
 /**
- * Function to write a specific appointment
- * @param {*} card 
+ * Function to write a specific card
+ * @param {*} card
  * @returns 
  */
 export async function setCardData(card) {
   // find the id
-  const timeSlotId = await getTimeslot(card.timeslot)
-  console.log('timeSlotId', timeSlotId[0].id);
+  const deckId = await getDeck(card.deck)
+  console.log('deckId', deckId[0].id);
   const { data, error } = await supabase.from('cards').insert([
     {
-      date: card.date,
-      timeslot: timeSlotId[0].id,
-      state: 'unchecked',
-      pet: card.pet,
+      question: card.question,
+      answer: card.answer,
+      deck: card.deck
     },
   ]);
   if (error) console.log('Error', error);
