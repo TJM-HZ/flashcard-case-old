@@ -1,25 +1,25 @@
 import express from 'express';
 import cors from 'cors';
 const router = express.Router();
-import { getPets } from '../controllers/petsController.js';
+import { getCards } from '../controllers/petsController.js';
 import {
-  getAppointment,
-  setAppointment,
-  getAppointments,
+  getCards,
+  setCard,
+  getCards,
 } from '../controllers/appointmentController.js';
 
 // root level route, this one is optional
 router.get('/', cors(), (req, res, next) => {
-  res.json('Welcome to your local veterinarian 🐶');
+  res.json('Welcome to your Flashy flash app');
 });
 
 //these routes are not that logical, and are here for testing supabase and google sheets api
-router.get('/pets', cors(), getPets);
+router.get('/decks', cors(), getDecks);
 
 /**
  * all appointments routes
  */
-router.options('/appointments', (req, res, next) => {
+router.options('/cards', (req, res, next) => {
   //set header before response
   res.header({
     allow: 'GET, POST, OPTIONS',
@@ -32,21 +32,21 @@ router.options('/appointments', (req, res, next) => {
 });
 
 // get a collection of all the appointments and ou can use a query
-router.get('/appointments', cors(), getAppointments);
+router.get('/cards', cors(), getCards);
 
 // get an individual appointment
-router.get('/appointments/:id', cors(), getAppointment);
+router.get('/cards/:id', cors(), getCard);
 
 // post a route using the middleware for reading the body
-router.post('/appointments', cors(), setAppointment);
+router.post('/cards', cors(), setCard);
 
 // delete an individual appointment
 // TODO: not implemented yet
-router.delete('/appointments/:id', cors(), (req, res, next) => {
-  const appointment = req.params.appointment;
+router.delete('/cards/:id', cors(), (req, res, next) => {
+  const card = req.params.card;
   res.json({
     title: 'deleted',
-    message: `oops ${appointment} was deleted accidentally 🥺`,
+    message: `oops ${card} was deleted accidentally 🥺`,
   });
 });
 
